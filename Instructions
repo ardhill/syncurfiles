@@ -1,0 +1,100 @@
+TLDR:
+=====
+
+1. Pick One Script
+---------------
+syncurfiles.sh - to run in terminal
+syncurfiles-cron.sh - to run as a cron job
+
+
+2. Edit These Lines to suit your needs:
+-------------------------------------
+DRIVE=/media/paul/MyBackupDrive/BackUps
+
+HOMEDIR=/home/secure
+
+DIRSTOSYNC="Documents Music Videos Pictures"
+
+
+3. Make the Script Exocutable
+
+Job Done!
+
+=================================
+The More Descriptive Instructions
+=================================
+
+This rsync backup script is a very basic linux script I wrote for backing up my important files to a seperate drive.
+
+In my case, I want to plug in an external USB drive and sync over some of my important directories and their contents.
+
+As I am doing the same commands each time, I wrote a script to automate it.
+
+You could use this in the same was as I do, or have it more automated to run at regular times to a drive available at all times e.g. a seperate drive in your computer, on your network etc. Of course, you can simply use it to sync to another area on the same drive - same partition or different partition - just whatever your use case is. I wanted to do this on a seperate, removeable drive. And lets face it "you can never have too many backups" (Lobsang - The Long Earth series)
+
+
+Two Files - One Purpose
+-----------------------
+
+There are two scripts here, the only difference is that one will give you information on the terminal screen, the other says nothing on the terminal screen, but gives you a log file afterwards in the destination directory.
+
+syncurfiles.sh - Gives You Information in The Terminal Screen
+
+syncurfiles-cron.sh - No terminal output, instead it gives you a log file wich you can open with a text editor in your destination directory.
+
+The log file will be in a directory within your destination directory called 'backup-logs' It will have the date and time on the file name to help you figure out which one you want to view.
+
+Choose one (or two) of the scripts to edit for your purposes.
+ 
+
+Edit Before Use
+------------------
+
+You need to edit the script before you can use to make it back up the things you want, to where you want.
+
+Once you have decided what you will backup and to where, then edit the lines below (in the script) to suit your purposes:
+
+This is your destination - where your back-up will be.
+DRIVE=/media/paul/MyBackupDrive/BackUps
+.
+This is the base directory for the folders you wish to back-up, if they are all folders in your 'home' directory, then you don't need to edit this.
+HOMEDIR=$HOME
+
+These are the directory names that you wish to back-up
+DIRSTOSYNC="Documents Music Videos Pictures"
+
+
+Where To Put This Script
+------------------------
+
+You can put it anywhere your computer really. I guess most people would put it into a directory called scripts or something like that in their "Documents" directory.  For me, I put it in `/usr/local/bin` then it is in my $PATH for bash. So, I don't have to type the `path/to/my/script/syncurfiles.sh`
+
+From the command line, I just need to type:
+`syncurfiles.sh` 
+
+Move from your Downloads directory, to /usr/local/bin 
+`sudo cp /Downloads/syncurfiles/syncurfiles.sh /usr/local/bin` 
+
+
+Making It Exocutable
+---------------------
+
+With any script, it needs to be exocutable before you can use it, otherwise your computer will just try to read the contents of the file.
+
+So, assuming you have the script in your /usr/local/bin. Copy and paste the following into your terminal.
+
+`sudo chmod +x /usr/local/bin/syncurfiles.sh`
+
+
+Automation
+----------
+
+If you wish to automate, then once you have edited the script and set the permissions to exocute, you can add the automated task to your crontab. 
+
+DOCUMENTATION STILL IN PROGRESS...
+
+
+
+
+
+[1] Absolute File Path - This is the path from the absolute root /. So, if you are backing up to a seperate drive, you need to know where Linux says it is. It won't be "My-BackUp-Drive", it may be /media/paul/My-Backup-Drive. Different disributions have different ways to show you this path, for instance some will show you it in the file manager. In the terminal, the command df can tell you - look at the info to the right, under "Mounted On" for the drive/partition you want.
