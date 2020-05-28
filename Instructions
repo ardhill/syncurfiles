@@ -4,7 +4,7 @@ TLDR:
 1. Pick One Script
 ---------------
 syncurfiles.sh - to run in terminal
-syncurfiles-cron.sh - to run as a cron job
+syncurfiles-cron.sh - to run as a cron/unattended job
 
 
 2. Edit These Lines to suit your needs:
@@ -67,13 +67,13 @@ DIRSTOSYNC="Documents Music Videos Pictures"
 Where To Put This Script
 ------------------------
 
-You can put it anywhere your computer really. I guess most people would put it into a directory called scripts or something like that in their "Documents" directory.  For me, I put it in `/usr/local/bin` then it is in my $PATH for bash. So, I don't have to type the `path/to/my/script/syncurfiles.sh`
+You can put it anywhere your computer really. I guess most people would put it into a directory called scripts or something like that in their "Documents" directory.  For me, I put it in `/usr/local/sbin` then it is in my $PATH for bash. So, I don't have to type the `path/to/my/script/syncurfiles.sh`
 
 From the command line, I just need to type:
 `syncurfiles.sh` 
 
 Move from your Downloads directory, to /usr/local/bin 
-`sudo cp /Downloads/syncurfiles/syncurfiles.sh /usr/local/bin` 
+`sudo cp /Downloads/syncurfiles/syncurfiles.sh /usr/local/sbin` 
 
 
 Making It Exocutable
@@ -83,7 +83,7 @@ With any script, it needs to be exocutable before you can use it, otherwise your
 
 So, assuming you have the script in your /usr/local/bin. Copy and paste the following into your terminal.
 
-`sudo chmod +x /usr/local/bin/syncurfiles.sh`
+`sudo chmod +x /usr/local/sbin/syncurfiles.sh`
 
 
 Automation
