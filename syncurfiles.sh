@@ -20,9 +20,6 @@ HOMEDIR=$HOME
 # Which folders in your home directory are you backing up?
 DIRSTOSYNC="Documents Music Videos Pictures"
 
-# If the directory /backup-logs doesn't exist in the destination, then make it.
-mkdir -p ${DRIVE}/backup-logs
-
 # Now do all the sync / Backup stuff for each of the source directories
 for DIR in $DIRSTOSYNC
 do
