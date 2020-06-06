@@ -1,5 +1,10 @@
-TLDR:
-=====
+=============
+Instructions:
+=============
+
+=====================================
+The Short version on the Instructions
+=====================================
 
 1. Pick One Script
 ---------------
@@ -20,9 +25,12 @@ DIRSTOSYNC="Documents Music Videos Pictures"
 
 Job Done!
 
-=================================
-The More Descriptive Instructions
-=================================
+
+
+
+==========================================
+The Longer, More Descriptive Instructions
+==========================================
 
 This rsync backup script is a very basic linux script I wrote for backing up my important files to a seperate drive.
 
@@ -54,13 +62,25 @@ You need to edit the script before you can use to make it back up the things you
 
 Once you have decided what you will backup and to where, then edit the lines below (in the script) to suit your purposes:
 
-This is your destination - where your back-up will be.
+This is your destination - where your back-up will be. You need the absolute file path [1]
 DRIVE=/media/paul/MyBackupDrive/BackUps
 .
 This is the base directory for the folders you wish to back-up, if they are all folders in your 'home' directory, then you don't need to edit this.
 HOMEDIR=$HOME
 
 These are the directory names that you wish to back-up
+DIRSTOSYNC="Documents Music Videos Pictures"
+
+You need to put the relative path [2]. Relative to the Base Directory you edited (or didn't edit) just before. The script has the base directory as a user's home directory by default, if you still have that then the list of folders to back up are relative to that e.g.
+"Documents Videos Pictures" - these are directories inside your home directory, so you just need the names.
+
+But, what if you wanted to back-up something different e.g. maybe you have a directory within your Downloads directory you want to back-up? You don't want the whole Downloads directory, just the one inside for example, maybe a ISOs directory? How do you add that, here is how:
+"Downloads/ISOs"
+
+What about a directory not in your home directory, maybe one in the user's root? Let's back up a timeshift directory stored in the users root (one level below your home directory).
+"../timeshift"  the ../ tells the computer to go back one directory first, then go into "timeshift"
+
+Between each directory, you need to put a space, and keep double quotes at each end of the list, like in the example
 DIRSTOSYNC="Documents Music Videos Pictures"
 
 
@@ -70,10 +90,10 @@ Where To Put This Script
 You can put it anywhere your computer really. I guess most people would put it into a directory called scripts or something like that in their "Documents" directory.  For me, I put it in `/usr/local/sbin` then it is in my $PATH for bash. So, I don't have to type the `path/to/my/script/syncurfiles.sh`
 
 From the command line, I just need to type:
-`syncurfiles.sh` 
+syncurfiles.sh
 
-Move from your Downloads directory, to /usr/local/bin 
-`sudo cp /Downloads/syncurfiles/syncurfiles.sh /usr/local/sbin` 
+Move from your Downloads directory, to /usr/local/sbin 
+sudo cp /Downloads/syncurfiles/syncurfiles.sh /usr/local/sbin
 
 
 Making It Exocutable
@@ -83,7 +103,41 @@ With any script, it needs to be exocutable before you can use it, otherwise your
 
 So, assuming you have the script in your /usr/local/bin. Copy and paste the following into your terminal.
 
-`sudo chmod +x /usr/local/sbin/syncurfiles.sh`
+sudo chmod +x /usr/local/bin/syncurfiles.sh
+
+
+Running The Script
+------------------
+
+If you have put it in the right place and made it exocutable, then to run it, you simply need to type a simple command in your terminal to make it work.
+
+syncurfiles.sh
+
+That's all that is needed, it should be running now.
+
+Once you start the script, let it run, don't stop it and don't close your terminal window until it has completed and you get your command prompt at the end again e.g.
+user@LinuxComputer:~$
+
+If you are watching the script on your terminal, there are times when messages are flashing by at great speed, times when you can see the progress of individual larger files coping, and times when it looks like it is doing nothing.
+
+It may look like nothing is happening at times, but it is still working.
+Even if you have had a few things come up on the screen like:
+
+sent 137.95K bytes  received 12 bytes  55.19K bytes/sec
+total size is 8.05G  speedup is 58,379.04
+
+sent 11.71K bytes  received 12 bytes  23.44K bytes/sec
+total size is 3.34G  speedup is 284,841.72
+
+Then the cursor doesn't appear to be doing anything - it is still working in the background. Don't stop it, don't close your terminal window until it has completed and you get your command prompt at the end again e.g.
+user@LinuxComputer:~$
+
+
+Permission denied errors
+------------------------
+
+If you are trying to copy files, but get permission denied erros on some files or directories, then you probably need elevated permissions. You need to run the script as sudo
+sudo syncurfiles.sh
 
 
 Automation
@@ -98,3 +152,4 @@ DOCUMENTATION STILL IN PROGRESS...
 
 
 [1] Absolute File Path - This is the path from the absolute root /. So, if you are backing up to a seperate drive, you need to know where Linux says it is. It won't be "My-BackUp-Drive", it may be /media/paul/My-Backup-Drive. Different disributions have different ways to show you this path, for instance some will show you it in the file manager. In the terminal, the command df can tell you - look at the info to the right, under "Mounted On" for the drive/partition you want.
+[2] Relative File Path - This is the path, that starts from where your starting from. i.e. it is relative to your position in the file path. In the example here, you are starting in your /home/user directory, so the path starts from there, and not from the absolute root /.
